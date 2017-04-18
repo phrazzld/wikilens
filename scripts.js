@@ -30,6 +30,9 @@ function fixLinks(wiki) {
             if(page.indexOf('.jpg') !== -1 || page.indexOf('.jpeg') !== -1 || page.indexOf('.png') !== -1) {
                 $(this).remove();
             }
+            if(page.indexOf(':') !== -1) {
+                $(this).remove();
+            }
             page = page.substr(page.lastIndexOf('/') + 1);
             $(this).click(function() {
                 viewWikipediaPage(page);
@@ -78,6 +81,12 @@ function handleRedirect(wiki) {
 }
 
 $(document).ready(function() {
+    // Define event handler for form submission
+    $("#search-form").submit(function(event) {
+        event.preventDefault();
+        var searchTerm = $("#search-input").val();
+        viewWikipediaPage(searchTerm);
+    });
     viewWikipediaPage('Ada_Lovelace');
 });
 
