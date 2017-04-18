@@ -1,21 +1,21 @@
 // Given a clean page name, fetch Wikipedia article contents for that page
 function viewWikipediaPage(page) {
     $.ajax({
-        type: "GET",
-        url: "http://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&page=" + page + "&callback=?",
-        contentType: "application/json; charset=utf-8",
+        type: 'GET',
+        url: 'http://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&page=' + page + '&callback=?',
+        contentType: 'application/json; charset=utf-8',
         async: false,
-        dataType: "json",
+        dataType: 'json',
         success: function(data, textStatus, jqXHR) {
-            var raw = data.parse.text["*"];
+            var raw = data.parse.text['*'];
             var wiki = $('<div></div>').html(raw);
             handleRedirect(wiki);
-            scrubWiki(wiki);
+            //scrubWiki(wiki);
             fixLinks(wiki);
-            $("#wiki-contents").html($(wiki));
+            $('#wiki-contents').html($(wiki));
         },
         error: function(errorMessage) {
-            console.log("Error: " + errorMessage);
+            console.log('Error: ' + errorMessage);
         }
     });
 }
@@ -82,9 +82,9 @@ function handleRedirect(wiki) {
 
 $(document).ready(function() {
     // Define event handler for form submission
-    $("#search-form").submit(function(event) {
+    $('#search-form').submit(function(event) {
         event.preventDefault();
-        var searchTerm = $("#search-input").val();
+        var searchTerm = $('#search-input').val();
         viewWikipediaPage(searchTerm);
     });
     viewWikipediaPage('Ada_Lovelace');
