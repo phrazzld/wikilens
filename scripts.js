@@ -10,9 +10,26 @@ function viewWikipediaPage(page) {
             var raw = data.parse.text['*'];
             var wiki = $('<div></div>').html(raw);
             handleRedirect(wiki);
-            //scrubWiki(wiki);
             fixLinks(wiki);
             $('#wiki-contents').html($(wiki));
+        },
+        error: function(errorMessage) {
+            console.log('Error: ' + errorMessage);
+        }
+    });
+}
+
+// View random Wikipedia article
+function viewRandomWiki() {
+    $.ajax({
+        type: 'GET',
+        url: 'https://simple.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extract&format=json&callback=?',
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+            var page = data["query"]["pages"][Object.keys(data["query"]["pages"])[0]]["title"];
+            viewWikipediaPage(page);
         },
         error: function(errorMessage) {
             console.log('Error: ' + errorMessage);
@@ -87,7 +104,10 @@ $(document).ready(function() {
         var searchTerm = $('#search-input').val();
         viewWikipediaPage(searchTerm);
     });
-    viewWikipediaPage('Ada_Lovelace');
+    $('#random').click(function(event) {
+        event.preventDefault();
+        viewRandomWiki();
+    });
 });
 
 
