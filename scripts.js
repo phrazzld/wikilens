@@ -2,7 +2,7 @@
 function viewWikipediaPage(page) {
     $.ajax({
         type: 'GET',
-        url: 'http://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&page=' + page + '&callback=?',
+        url: 'https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&page=' + page + '&callback=?',
         contentType: 'application/json; charset=utf-8',
         async: false,
         dataType: 'json',
